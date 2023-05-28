@@ -26,13 +26,11 @@ router.get("/books", (req, res) => {
 //Updating a single record from Database based on ID
 router.get("/book/:id", (req, res) => {
     let userId = req.params.id;
-    for(let index = 0; index < dataBase.length; index++) {
-        let currObject = dataBase[index];
-        if(currObject.id == userId) {
-            res.status(201).json(currObject);
-        }
+    let book = dataBase.find((book) => book.id == userId);
+    if(!book) {
+        res.status(404).json({message: "Book Not Found"});
     }
-    res.status(404).send("Book Not-Found in the Library");
+    res.status(201).json(book);
 });
 
 //Deleting the book from Database
